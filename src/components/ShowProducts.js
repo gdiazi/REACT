@@ -13,14 +13,14 @@ const ShowProducts = () => {
     const url = 'http://retos.mavoagenciadigital.com/api-products/';
 
     const [products, setProducts] = useState([]);
-    const [id, setId] = useState();
+    const [id, setId] = useState('');
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
     const [price, setPrice] = useState('');
-    const [operation, setOperation] = useState(1);
+    const [operation, setOperation] = useState('');
     const [title, setTitle] = useState('');
 
-    let i = + 1;
+    //let i = 0;
     useEffect(() => {
         getProducts();
     }, []);
@@ -59,7 +59,7 @@ const ShowProducts = () => {
         if (name.trim() === ''){
             show_alerta('Escribe el nombre del producto','warning');
         }
-        else if(description.triom() === ''){
+        else if(description.trim() === ''){
             show_alerta('Escribe la descripción del producto','warning');
         }
         else if(price === ''){
@@ -79,18 +79,19 @@ const ShowProducts = () => {
        }
     }
     const enviarSolicitud = async(metodo,parametros) => {
-        await axios({method:metodo, url:url, data:parametros}).then(function(respuesta){
+        await axios({ method:metodo, url:url, data:parametros }).then(function(respuesta){
             var tipo = respuesta.data[0];
             var msj = respuesta.data[1];
             show_alerta(msj,tipo);
+            console.log(tipo);
             if(tipo === 'success'){
                 document.getElementById('btnCerrar').click();
                 getProducts();
             }
         })
-        .catch(function(error){
+        .catch(function(e){
             show_alerta('Error en la solicitud', 'error');
-            console.log(error);
+            console.log(e);
         });
     }
      
@@ -152,11 +153,11 @@ const ShowProducts = () => {
                                         </tr>
                                     </thead>
                                     <tbody className='table-group-divider'>
-                                        {products.map((product, id) => (
+                                        {products.map((product, i) => (
 
                                             <tr key={product.id}>
 
-                                                <td>{(i ++)}</td>
+                                                <td>{i+1}</td>
                                                 <td>{product.name}</td>
                                                 <td>{product.description}</td>
                                                 <td>${new Intl.NumberFormat('es-mx').format(product.price)}</td>
@@ -188,7 +189,7 @@ const ShowProducts = () => {
                             <button type='button' className='btn-close' data-bs-dismiss='modal' aria-label='close'></button>
                         </div>
                         <div className='modal-body'>
-                            <input type='hidden' id='id'></input>
+                            <input hidden id='id'></input>
                            
                             <div className='input-group mb-3'>
                                 <span className='input-group-text'>
@@ -219,7 +220,7 @@ const ShowProducts = () => {
 
                         </div>
                         <div className='modal-footer'>
-                                   <button type='button'  className='btn btn-secondary' data-bs-dismiss='modal'>Cerrar</button>         
+                                   <button type='button' id="btnCerrar"  className='btn btn-secondary' data-bs-dismiss='modal'>Cerrar</button>         
                         </div>
                     </div>
 
