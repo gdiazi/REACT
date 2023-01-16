@@ -17,10 +17,10 @@ const ShowProducts = () => {
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
     const [price, setPrice] = useState('');
-    const [operation, setOperation] = useState('');
+    const [operation, setOperation] = useState(1);
     const [title, setTitle] = useState('');
 
-    let i = 0;
+    let i = + 1;
     useEffect(() => {
         getProducts();
     }, []);
@@ -156,7 +156,7 @@ const ShowProducts = () => {
 
                                             <tr key={product.id}>
 
-                                                <td>{(i + 1)}</td>
+                                                <td>{(i ++)}</td>
                                                 <td>{product.name}</td>
                                                 <td>{product.description}</td>
                                                 <td>${new Intl.NumberFormat('es-mx').format(product.price)}</td>
