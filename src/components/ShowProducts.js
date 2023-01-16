@@ -9,6 +9,7 @@ import { show_alerta } from '../functions';
 
 const ShowProducts = () => {
 
+
     const url = 'http://localhost/api-products/';
 
     const [products, setProducts] = useState([]);
@@ -50,7 +51,7 @@ const ShowProducts = () => {
        window.setTimeout(function(){
         document.getElementById('nombre').focus();
        },500);
-
+    }
        const validar = () => {
         var parametros;
         var metodo;
@@ -96,11 +97,12 @@ const ShowProducts = () => {
     const deleteProduct= (id,name) => {
         const MySwal = withReactContent(Swal);
         MySwal.fire({
-            title: '¿Sewguro desea eliminar el producto' '+name+' ?',
+            title: '¿Seguro desea eliminar el producto '+name+' ?',
             icon: 'question', text: 'No se podra dar marcha atras',
-            showCancelButton:true,confirmButtonText:'Si, eliminar', cancelButtonText: 'Cancelar'
+            showCancelButton:true, confirmButtonText:'Si, eliminar', cancelButtonText: 'Cancelar'
 
-        }).then(result) => {
+        }).then((result) => {
+
             if(result.isConfirmed){
                 setId(id);
                 enviarSolicitud('DELETE',{id:id});
@@ -163,7 +165,7 @@ const ShowProducts = () => {
                                                         <i className='fa-solid fa-edit'></i>
                                                     </button>
                                                     &nbsp;
-                                                    <button className='btn btn-danger'>
+                                                    <button onClick={()=>deleteProduct(product.id, product.name)} className='btn btn-danger'>
                                                         <i className='fa-solid fa-trash'></i>
                                                     </button>
                                                 </td>
@@ -233,5 +235,4 @@ const ShowProducts = () => {
         </div>
     )
 }
-}
-export default ShowProducts;
+export default ShowProducts
